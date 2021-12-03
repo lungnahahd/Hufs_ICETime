@@ -4,13 +4,13 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 
-from .form import BoardWriteForm, MemberForm, signupForm
+from .form import BoardWriteForm, MemberForm, signupForm, studentBoardWriteForm
 from Board import form
 from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
-
+#새내기
 def nonMemberMain(request):
     boardList = Board.objects.all()
     return render(request, 'nonMemberMain.html', {'boardList' : boardList})
@@ -99,7 +99,6 @@ def delete(request, boardid):
     return render(request, 'main.html', {'boardList' : boardList})
 
 
-#로그인
 def login(request):
     form = MemberForm()
     return render(request,'login.html',{'form': form})
@@ -122,7 +121,117 @@ def signUp(request):
 
 
 
+
+
+#재학생
+def studentnonMemberMain(request):
+    boardList = studentBoard.objects.all()
+    return render(request, 'studentnonMemberMain.html', {'boardList' : boardList})
+
+
+def studentnonMemberDetail(request, boardid):
+    board = get_object_or_404(studentBoard,pk=boardid)
+    try:
+        session = request.session['memberid']
+        context = {
+            'board': board,
+            'session': session,
+        }
+        return render(request,'studentnonMemberDetail.html',context)
+
+    except KeyError:
+        return redirect('studentnonMemberMain')
+
+
+def studentmain(request):
+
+    boardList = studentBoard.objects.all()
+
+    if request.method == 'POST':
+        ID = request.POST.get('ID')
+        password = request.POST.get('password')
+        member = Member.objects.get(ID=ID,password=password)
+        if member is not None:
+            request.session['memberid'] = member.ID
+            return render(request, 'studentmain.html', {'boardList' : boardList})
+
+        else:
+            return redirect('studentlogin')
+    
+    return render(request, 'studentmain.html',{'boardList' : boardList})
+
+
+def studentwrite(request):
+    if request.method =='POST':
+        form = studentBoardWriteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('studentmain')
+
+    member_id = request.session['memberid']
+    member = get_object_or_404(Member, pk=member_id)
+    form = studentBoardWriteForm(initial={'member':member})
+    return render(request, 'studentwrite.html', {'form':form, 'member':member})
+
+
+def studentdetail(request, boardid):
+    board = get_object_or_404(studentBoard,pk=boardid)    
+    try:
+        session = request.session['memberid']
+        context = {
+            'board': board,
+            'session': session,
+        }
+        return render(request,'studentdetail.html',context)
+
+    except KeyError:
+        return redirect('studnetmain')
+
 @csrf_exempt
-def showMain(request):
-    if request.method =='GET':
-        return render(request,'realMain.html')
+def studentupdate(request, boardid):
+    if request.method =='POST':
+        board = studentBoard.objects.get(pk=boardid)
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        user = request.POST.get('user')
+        if title is not None and board is not None:
+            board.title = title
+            board.content = content
+            board.user = user
+            board.save()
+            return render(request, 'studentdetail.html', {'board': board})
+        else:
+            return render(request, 'studentdetail.html', {'board': board})
+
+
+def studentdelete(request, boardid):
+    boardList = studentBoard.objects.all()
+    board = studentBoard.objects.get(id=boardid)
+    board.delete()
+    boards = {'boards': studentBoard.objects.all()}
+    return render(request, 'studentmain.html', {'boardList' : boardList})
+
+
+def studentlogin(request):
+    form = MemberForm()
+    return render(request,'studentlogin.html',{'form': form})
+
+
+def studentlogout(request):
+    boardList = studentBoard.objects.all()
+    if request.session.get('user'):
+        del(request.session['user'])
+    form = MemberForm()
+    return render(request,'studentnonMemberMain.html',{'boardList' : boardList})
+
+
+def studentsignUp(request):
+    if request.method =='POST':
+        form = signupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('studentlogin')
+    form = signupForm()
+    return render(request,'studentsignup.html',{'form': form})
+
+

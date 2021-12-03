@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'Behappy.wsgi.application'
 DATABASES = { 
 	'default': { 
 	    'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'NoticeBoard', 
+        'NAME': 'databaseteam', 
         'USER': 'root', 
         'PASSWORD': 'qwe123!@#', 
         'HOST': 'localhost', 
