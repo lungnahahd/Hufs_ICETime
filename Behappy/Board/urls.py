@@ -6,7 +6,11 @@ from FindLocation.views import showDiffer
 from . import views
 
 urlpatterns = [
-    
+    #게시판 선택
+    path('', views.nonMemberSelectpage, name='nonMemberSelectpage'),
+    path('nonMemberSelectpage/', views.nonMemberSelectpage, name='nonMemberSelectpage'),
+    path('selectpage/', views.selectpage, name='selectpage'),
+
     #새내기 게시판
     path('nonMemberMain/', views.nonMemberMain, name='nonMemberMain'),
     path('nonMemberDetail/<int:boardid>/', views.nonMemberDetail, name='nonMemberDetail'),

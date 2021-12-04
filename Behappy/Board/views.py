@@ -8,6 +8,15 @@ from .form import BoardWriteForm, MemberForm, signupForm, studentBoardWriteForm,
 from Board import form
 from django.views.decorators.csrf import csrf_exempt
 
+#게시판 선택
+def nonMemberSelectpage(request):
+    boardList = Board.objects.all()
+    return render(request, 'nonMemberSelectpage.html', {'boardList' : boardList})
+
+def selectpage(request):
+    boardList = Board.objects.all()
+    return render(request, 'selectpage.html', {'boardList' : boardList})    
+
 
 # Create your views here.
 #새내기
