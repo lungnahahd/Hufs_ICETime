@@ -42,8 +42,8 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" style="font-size: 20px;" href="#portfolio">소개</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" style="font-size: 20px;" href="http://127.0.0.1:8000/studentnonMemberMain">게시판</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" style="font-size: 20px;" href="http://127.0.0.1:8000/studentlogin">로그인</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" style="font-size: 20px;" href="http://127.0.0.1:8000/lovenonMemberMain">게시판</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" style="font-size: 20px;" href="http://127.0.0.1:8000/lovelogin">로그인</a></li>
                     </ul>
                 </div>
             </div>
@@ -61,7 +61,7 @@
 
             
             <div class="text-center" style="width: 500px; margin: 0 auto;">
-                <form action="{% url 'studentupdate' boardid=board.id %}" method="POST">
+                <form action="{% url 'loveupdate' boardid=board.id %}" method="POST">
                     
                     <div class="noti" style="background-color: #8a92ec; width:500px; margin: 0 auto; margin-bottom: 10px">제목</div>
                     <input type="text" class="title" name="title" value="{{board.title}}" readonly/>
@@ -99,13 +99,13 @@
                     <br>
                     {%endif%}
                     <br>
-                    <a href="{% url 'studentmain' %}"><input type="button" class="btn btn-primary" value="돌아가기"></a>
+                    <a href="{% url 'lovemain' %}"><input type="button" class="btn btn-primary" value="돌아가기"></a>
                     
                 </form>
                 {% if board.member.ID == session %}
                 <!--삭제하기 버튼 기능 -->
                 <br>
-                <td><button class="btn btn-danger rounded-pill" onclick="location.href='/studentdelete/{{board.id}}'" style="width: 100px; height:30px; padding: 0px 0px 0px 0px;">삭제</button></td>
+                <td><button class="btn btn-danger rounded-pill" onclick="location.href='/lovedelete/{{board.id}}'" style="width: 100px; height:30px; padding: 0px 0px 0px 0px;">삭제</button></td>
                 {%endif%}
                 
             </div>

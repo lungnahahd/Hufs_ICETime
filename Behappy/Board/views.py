@@ -238,7 +238,6 @@ def studentsignUp(request):
 
 
 #졸업생
-
 def graduatenonMemberMain(request):
     boardList = graduateBoard.objects.all()
     return render(request, 'graduatenonMemberMain.html', {'boardList' : boardList})
@@ -347,5 +346,119 @@ def graduatesignUp(request):
             return redirect('graduatelogin')
     form = signupForm()
     return render(request,'graduatesignup.html',{'form': form})
+
+
+
+# 연애상담 게시판
+
+
+def lovenonMemberMain(request):
+    boardList = loveBoard.objects.all()
+    return render(request, 'lovenonMemberMain.html', {'boardList' : boardList})
+
+
+def lovenonMemberDetail(request, boardid):
+    board = get_object_or_404(loveBoard,pk=boardid)
+    try:
+        session = request.session['memberid']
+        context = {
+            'board': board,
+            'session': session,
+        }
+        return render(request,'lovenonMemberDetail.html',context)
+
+    except KeyError:
+        return redirect('lovenonMemberMain')
+
+
+def lovemain(request):
+
+    boardList = loveBoard.objects.all()
+
+    if request.method == 'POST':
+        ID = request.POST.get('ID')
+        password = request.POST.get('password')
+        member = Member.objects.get(ID=ID,password=password)
+        if member is not None:
+            request.session['memberid'] = member.ID
+            return render(request, 'lovemain.html', {'boardList' : boardList})
+
+        else:
+            return redirect('lovelogin')
+    
+    return render(request, 'lovemain.html',{'boardList' : boardList})
+
+
+def lovewrite(request):
+    if request.method =='POST':
+        form = loveBoardWriteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lovemain')
+    member_id = request.session['memberid']
+    member = get_object_or_404(Member, pk=member_id)
+    form = loveBoardWriteForm(initial={'member':member})
+    return render(request, 'lovewrite.html', {'form':form, 'member':member})
+
+
+def lovedetail(request, boardid):
+    board = get_object_or_404(loveBoard,pk=boardid)    
+    try:
+        session = request.session['memberid']
+        context = {
+            'board': board,
+            'session': session,
+        }
+        return render(request,'lovedetail.html',context)
+
+    except KeyError:
+        return redirect('lovemain')
+
+@csrf_exempt
+def loveupdate(request, boardid):
+    if request.method =='POST':
+        board = loveBoard.objects.get(pk=boardid)
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        user = request.POST.get('user')
+        if title is not None and board is not None:
+            board.title = title
+            board.content = content
+            board.user = user
+            board.save()
+            return render(request, 'lovedetail.html', {'board': board})
+        else:
+            return render(request, 'lovedetail.html', {'board': board})
+
+
+def lovedelete(request, boardid):
+    boardList = loveBoard.objects.all()
+    board = loveBoard.objects.get(id=boardid)
+    board.delete()
+    boards = {'boards': loveBoard.objects.all()}
+    return render(request, 'lovemain.html', {'boardList' : boardList})
+
+
+def lovelogin(request):
+    form = MemberForm()
+    return render(request,'lovelogin.html',{'form': form})
+
+
+def lovelogout(request):
+    boardList = loveBoard.objects.all()
+    if request.session.get('user'):
+        del(request.session['user'])
+    form = MemberForm()
+    return render(request,'lovenonMemberMain.html',{'boardList' : boardList})
+
+
+def lovesignUp(request):
+    if request.method =='POST':
+        form = signupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lovelogin')
+    form = signupForm()
+    return render(request,'lovesignup.html',{'form': form})
 
 

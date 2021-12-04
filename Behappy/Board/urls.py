@@ -54,5 +54,23 @@ urlpatterns = [
 
 
 
+    #연애상담 게시판
+    path('lovenonMemberMain/', views.lovenonMemberMain, name='lovenonMemberMain'),
+    path('lovenonMemberDetail/<int:boardid>/', views.lovenonMemberDetail, name='lovenonMemberDetail'),
+    path('lovemain/', views.lovemain, name='lovemain'),
+    path('lovewrite/', views.lovewrite, name='lovewrite'),
+    path('lovedetail/<int:boardid>/', views.lovedetail, name='lovedetail'),
+    path('lovedelete/<int:boardid>', views.lovedelete, name='lovedelete'),
+    path('loveupdate/<int:boardid>/', views.loveupdate, name='loveupdate'),
+    url('post/(?P<id>[0-9]+)$', views.detail, name='detail'),
+
+    path('lovelogin/', views.lovelogin, name='lovelogin'),
+    path('lovesignUp/', views.lovesignUp, name='lovesignUp'),
+    path('lovelogout/', views.lovelogout, name='lovelogout'),
+
+
+
+
+
 
 ] 
