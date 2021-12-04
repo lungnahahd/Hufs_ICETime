@@ -22,3 +22,19 @@ class studentBoard(models.Model):
     member = models.ForeignKey(Member , on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
+
+
+class graduateBoard(models.Model):
+    title = models.CharField(max_length=20)
+    content = models.CharField(max_length=255)
+    member = models.ForeignKey(Member , on_delete=models.CASCADE)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+
+
+class loveBoard(models.Model):
+    title = models.CharField(max_length=20)
+    content = models.CharField(max_length=255)
+    member = models.ForeignKey(Member , on_delete=models.CASCADE)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)

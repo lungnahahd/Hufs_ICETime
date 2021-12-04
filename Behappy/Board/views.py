@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 
-from .form import BoardWriteForm, MemberForm, signupForm, studentBoardWriteForm
+from .form import BoardWriteForm, MemberForm, signupForm, studentBoardWriteForm, graduateBoardWriteForm, loveBoardWriteForm
 from Board import form
 from django.views.decorators.csrf import csrf_exempt
 
@@ -185,7 +185,7 @@ def studentdetail(request, boardid):
         return render(request,'studentdetail.html',context)
 
     except KeyError:
-        return redirect('studnetmain')
+        return redirect('studentmain')
 
 @csrf_exempt
 def studentupdate(request, boardid):
@@ -233,5 +233,119 @@ def studentsignUp(request):
             return redirect('studentlogin')
     form = signupForm()
     return render(request,'studentsignup.html',{'form': form})
+
+
+
+
+#졸업생
+
+def graduatenonMemberMain(request):
+    boardList = graduateBoard.objects.all()
+    return render(request, 'graduatenonMemberMain.html', {'boardList' : boardList})
+
+
+def graduatenonMemberDetail(request, boardid):
+    board = get_object_or_404(graduateBoard,pk=boardid)
+    try:
+        session = request.session['memberid']
+        context = {
+            'board': board,
+            'session': session,
+        }
+        return render(request,'graduatenonMemberDetail.html',context)
+
+    except KeyError:
+        return redirect('graduatenonMemberMain')
+
+
+def graduatemain(request):
+
+    boardList = graduateBoard.objects.all()
+
+    if request.method == 'POST':
+        ID = request.POST.get('ID')
+        password = request.POST.get('password')
+        member = Member.objects.get(ID=ID,password=password)
+        if member is not None:
+            request.session['memberid'] = member.ID
+            return render(request, 'graduatemain.html', {'boardList' : boardList})
+
+        else:
+            return redirect('graduatelogin')
+    
+    return render(request, 'graduatemain.html',{'boardList' : boardList})
+
+
+def graduatewrite(request):
+    if request.method =='POST':
+        form = graduateBoardWriteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('graduatemain')
+    member_id = request.session['memberid']
+    member = get_object_or_404(Member, pk=member_id)
+    form = graduateBoardWriteForm(initial={'member':member})
+    return render(request, 'graduatewrite.html', {'form':form, 'member':member})
+
+
+def graduatedetail(request, boardid):
+    board = get_object_or_404(graduateBoard,pk=boardid)    
+    try:
+        session = request.session['memberid']
+        context = {
+            'board': board,
+            'session': session,
+        }
+        return render(request,'graduatedetail.html',context)
+
+    except KeyError:
+        return redirect('graduatemain')
+
+@csrf_exempt
+def graduateupdate(request, boardid):
+    if request.method =='POST':
+        board = graduateBoard.objects.get(pk=boardid)
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        user = request.POST.get('user')
+        if title is not None and board is not None:
+            board.title = title
+            board.content = content
+            board.user = user
+            board.save()
+            return render(request, 'graduatedetail.html', {'board': board})
+        else:
+            return render(request, 'graduatedetail.html', {'board': board})
+
+
+def graduatedelete(request, boardid):
+    boardList = graduateBoard.objects.all()
+    board = graduateBoard.objects.get(id=boardid)
+    board.delete()
+    boards = {'boards': graduateBoard.objects.all()}
+    return render(request, 'graduatemain.html', {'boardList' : boardList})
+
+
+def graduatelogin(request):
+    form = MemberForm()
+    return render(request,'graduatelogin.html',{'form': form})
+
+
+def graduatelogout(request):
+    boardList = graduateBoard.objects.all()
+    if request.session.get('user'):
+        del(request.session['user'])
+    form = MemberForm()
+    return render(request,'graduatenonMemberMain.html',{'boardList' : boardList})
+
+
+def graduatesignUp(request):
+    if request.method =='POST':
+        form = signupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('graduatelogin')
+    form = signupForm()
+    return render(request,'graduatesignup.html',{'form': form})
 
 

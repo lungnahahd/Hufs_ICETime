@@ -35,6 +35,22 @@ urlpatterns = [
     path('studentlogin/', views.studentlogin, name='studentlogin'),
     path('studentsignUp/', views.studentsignUp, name='studentsignUp'),
     path('studentlogout/', views.studentlogout, name='studentlogout'),
+    
+
+
+    #졸업생 게시판
+    path('graduatenonMemberMain/', views.graduatenonMemberMain, name='graduatenonMemberMain'),
+    path('graduatenonMemberDetail/<int:boardid>/', views.graduatenonMemberDetail, name='graduatenonMemberDetail'),
+    path('graduatemain/', views.graduatemain, name='graduatemain'),
+    path('graduatewrite/', views.graduatewrite, name='graduatewrite'),
+    path('graduatedetail/<int:boardid>/', views.graduatedetail, name='graduatedetail'),
+    path('graduatedelete/<int:boardid>', views.graduatedelete, name='graduatedelete'),
+    path('graduateupdate/<int:boardid>/', views.graduateupdate, name='graduateupdate'),
+    url('post/(?P<id>[0-9]+)$', views.detail, name='detail'),
+
+    path('graduatelogin/', views.graduatelogin, name='graduatelogin'),
+    path('graduatesignUp/', views.graduatesignUp, name='graduatesignUp'),
+    path('graduatelogout/', views.graduatelogout, name='graduatelogout'),
 
 
 
