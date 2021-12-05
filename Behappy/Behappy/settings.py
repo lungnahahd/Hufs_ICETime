@@ -133,21 +133,21 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATIC_ROOT = os.path.join(BASE_DIR,'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 #STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
 
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    STATIC_DIR,
-]
+STATIC_DIRS = [os.path.join(BASE_DIR,'static'),]
+# STATICFILES_DIRS = [
+#     STATIC_DIR,
+# ]
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
