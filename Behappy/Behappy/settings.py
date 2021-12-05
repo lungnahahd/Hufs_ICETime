@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'FindLocation',
     'Board',
-    #'rest_framework',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
