@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Behappy.urls'
@@ -91,11 +91,14 @@ WSGI_APPLICATION = 'Behappy.wsgi.application'
 DATABASES = { 
 	'default': { 
 	    'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'databaseteam', 
-        'USER': 'root', 
-        'PASSWORD': 'khd10810', 
-        'HOST': 'localhost', 
-        'PORT': '3306', 
+        'NAME': 'heroku_ed2f72b49402595', #databaseteam 
+        'USER': 'b507966f58485f', #root 
+        'PASSWORD': 'f297d4c4', 
+        'HOST': 'us-cdbr-east-04.cleardb.com', # localhost
+        'PORT': '3306',
+        'OPTIONS':{
+        'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
+        }, 
     } 
 }
 
