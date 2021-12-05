@@ -39,8 +39,8 @@
         
         <div style="margin: 0 auto; padding-top:100px; padding-bottom:2%; padding-left: 10%; padding-right: 10%; background-color: #1abc9c;">
             <!-- Masthead Avatar Image-->
-
-            <h2 style="margin: 0 auto; width: 240px; margin-top: 50px;">연애상담 게시판</h2>
+            <h5 style="margin: 0 auto; width: 280px; margin-top: 50px; margin-bottom: 20px;">로그인이 필요한 서비스입니다.</h5>
+            <h2 style="margin: 0 auto; width: 240px;">연애상담 게시판</h2>
                 <!-- Icon Divider-->
                 <div class="divider-custom">
                     <div class="divider-custom-line"></div>
@@ -65,7 +65,7 @@
             </tr>
             {% for item in boardList %}
             <tr>
-                <td style="background-color: white; width: 300px;"><a href="{% url 'lovenonMemberDetail' boardid=item.id %}">{{item.title}}</a></td>
+                <td style="background-color: white; width: 300px;">{{item.title}}</td>
                 <td style="background-color: white; width: 150px;">{{item.member_id}}</td>
                 <td style="background-color: white; width: 300px;">{{item.created_date}}</td>
                 <td style="background-color: white; width: 300px;">{{item.modified_date}}</td>
