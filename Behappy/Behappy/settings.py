@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 from pathlib import Path
 import os
-import django_heroku
+#import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -21,7 +21,8 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'p!1m7n1gi#q9+@#x^q__(hgrnagn!hkb+(x!af!t1*73ju+mtz'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','p!1m7n1gi#q9+@#x^q__(hgrnagn!hkb+(x!af!t1*73ju+mtz')
+#SECRET_KEY = 'p!1m7n1gi#q9+@#x^q__(hgrnagn!hkb+(x!af!t1*73ju+mtz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,7 +42,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'FindLocation',
     'Board',
-    #'rest_framework',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -137,14 +138,15 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 #STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/templates/'
+STATIC_URL = '/static/'
 
 
-STATIC_DIR = os.path.join(BASE_DIR, 'templates')
-STATICFILES_DIRS = [
-    STATIC_DIR,
-]
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = [
+#     STATIC_DIR,
+# ]
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
