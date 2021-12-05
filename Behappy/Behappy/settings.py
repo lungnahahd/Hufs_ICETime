@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 from pathlib import Path
 import os
-#import django_heroku
+import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','p!1m7n1gi#q9+@#x^q__(hgrnagn!hk
 #SECRET_KEY = 'p!1m7n1gi#q9+@#x^q__(hgrnagn!hkb+(x!af!t1*73ju+mtz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -150,4 +150,4 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
-#django_heroku.settings(locals())
+django_heroku.settings(locals())
