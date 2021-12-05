@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','p!1m7n1gi#q9+@#x^q__(hgrnagn!hk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['hufsicetime.herokuapp.com']
 
 
 # Application definition
