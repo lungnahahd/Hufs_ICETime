@@ -26,7 +26,7 @@ SECRET_KEY = 'p!1m7n1gi#q9+@#x^q__(hgrnagn!hkb+(x!af!t1*73ju+mtz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -86,13 +86,13 @@ WSGI_APPLICATION = 'Behappy.wsgi.application'
 #        'NAME': BASE_DIR / 'db.sqlite3',
 #    }
 #}
-
+#guswnsroqkfdyd
 DATABASES = { 
 	'default': { 
 	    'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'databaseteam', 
         'USER': 'root', 
-        'PASSWORD': 'guswnsroqkfdyd', 
+        'PASSWORD': 'khd10810', 
         'HOST': 'localhost', 
         'PORT': '3306', 
     } 
