@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'FindLocation',
     'Board',
-    'rest_framework',
+    #'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -138,11 +138,11 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
+#STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/templates/'
 
 
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATIC_DIR = os.path.join(BASE_DIR, 'templates')
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
